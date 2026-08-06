@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>강병석 | Kang ByungSuk — HR Professional</title>
+<meta name="description" content="포스코DX 경영지원실 인사그룹 강병석. 채용과 기술교육을 통해 조직의 미래 역량을 설계합니다." />
+
+<style>
+  :root{
+    --ink:#1a2333;
+    --ink-2:#4b5568;
+    --ink-3:#8b93a3;
+    --line:#e6e9f0;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --navy:#2f5fd6;          /* primary accent (navy-blue) */
+    --navy-soft:#eef3ff;
+    --navy-deep:#1e46ad;
+    --shadow:0 1px 2px rgba(20,28,48,.04), 0 6px 18px rgba(20,28,48,.06);
+    --shadow-lg:0 2px 4px rgba(20,28,48,.05), 0 14px 38px rgba(20,28,48,.11);
+    --r:16px;
+    --max:900px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+      "Segoe UI", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    word-break:keep-all;
+  }
+  a{color:inherit}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:22px 18px 64px}
+
+  /* ---------- shared card ---------- */
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+  }
+
+  section{margin-top:26px}
+  .sec-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+  .sec-head h2{font-size:19px;font-weight:800;letter-spacing:-.4px;margin:0}
+  .sec-head .sub{font-size:13px;color:var(--ink-3);font-weight:500}
+
+  /* ---------- top nav ---------- */
+  .topnav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(245,247,251,.82);
+    backdrop-filter:saturate(180%) blur(12px);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav-inner{
+    max-width:var(--max);margin:0 auto;padding:12px 18px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{font-weight:800;font-size:15.5px;letter-spacing:-.3px;text-decoration:none}
+  .brand span{color:var(--ink-3);font-weight:600}
+  .topnav nav{display:flex;gap:20px}
+  .topnav nav a{
+    text-decoration:none;color:var(--ink-2);font-size:14px;font-weight:600;
+    transition:color .15s ease;
+  }
+  .topnav nav a:hover{color:var(--navy)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#243456 0%,#1a2740 55%,#141b2e 100%);
+    border-radius:20px;color:#fff;padding:30px 28px 28px;
+    box-shadow:var(--shadow-lg);margin-top:22px;
+  }
+  .hero:before{
+    content:"";position:absolute;right:-70px;top:-90px;width:290px;height:290px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, rgba(79,124,255,.55), rgba(79,124,255,0) 68%);
+  }
+  .hero:after{
+    content:"";position:absolute;left:-70px;bottom:-130px;width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, rgba(110,140,210,.32), rgba(110,140,210,0) 70%);
+  }
+  .hero-inner{position:relative;z-index:1}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+    padding:5px 13px;border-radius:999px;font-size:12.5px;font-weight:700;letter-spacing:-.2px;
+    backdrop-filter:blur(4px);
+  }
+  .pill.accent{background:rgba(79,124,255,.24);border-color:rgba(79,124,255,.5);color:#d5e0ff}
+  .hero h1{margin:16px 0 3px;font-size:32px;line-height:1.25;font-weight:800;letter-spacing:-1px}
+  .hero h1 .en{color:#9fb4ec;font-size:16px;font-weight:700;letter-spacing:0}
+  .hero .tagline{margin:12px 0 6px;font-size:17px;font-weight:700;color:#eaf0ff;letter-spacing:-.3px}
+  .hero .lead{margin:0;color:#c3cbda;font-size:14.5px;max-width:56ch}
+  .hero-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+  .hero-meta .chip{
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);
+    border-radius:11px;padding:8px 13px;font-size:13px;color:#e6eaf2;
+  }
+  .hero-meta .chip b{color:#fff;font-weight:700}
+
+  /* ---------- ABOUT ---------- */
+  .about-card{padding:24px 24px 20px}
+  .about-card p{margin:0 0 14px;color:var(--ink-2);font-size:15.5px}
+  .about-card p:last-child{margin-bottom:0}
+  .about-card strong{color:var(--ink);font-weight:700}
+
+  /* ---------- EXPERTISE ---------- */
+  .tags{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+  .tag{
+    background:var(--navy-soft);color:var(--navy-deep);
+    border:1px solid #dbe6ff;border-radius:999px;
+    padding:7px 14px;font-size:13.5px;font-weight:700;letter-spacing:-.2px;
+  }
+  .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .exp{
+    padding:18px 18px 16px;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+  .exp:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:#d4dcea}
+  .exp .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:9px;
+    background:var(--navy-soft);color:var(--navy-deep);
+    font-size:13px;font-weight:800;margin-bottom:10px;
+  }
+  .exp h3{font-size:15.5px;font-weight:800;letter-spacing:-.3px;margin:0 0 6px}
+  .exp p{margin:0;font-size:13.8px;color:var(--ink-2);line-height:1.6}
+
+  /* ---------- WORK ---------- */
+  .work-list{display:grid;gap:14px}
+  .work{
+    padding:20px 20px 18px;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+  .work:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:#d4dcea}
+  .work-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+  .work .period{
+    font-size:12px;font-weight:800;color:var(--ink-3);
+    background:#f0f2f7;border-radius:999px;padding:3px 10px;
+    font-variant-numeric:tabular-nums;letter-spacing:.2px;
+  }
+  .work h3{font-size:16.5px;font-weight:800;letter-spacing:-.3px;margin:0}
+  .work p{margin:0 0 12px;color:var(--ink-2);font-size:14.5px}
+  .work .result{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:13px;font-weight:800;color:var(--navy-deep);
+    background:var(--navy-soft);border:1px solid #dbe6ff;
+    border-radius:999px;padding:5px 13px;
+  }
+  .work .result::before{
+    content:"";width:6px;height:6px;border-radius:2px;background:var(--navy);
+  }
+
+  /* ---------- GUESTBOOK ---------- */
+  .guestbook-card{padding:24px}
+  .guestbook-card .lead{margin:0 0 16px;color:var(--ink-2);font-size:14.5px}
+  .guestbook-card .giscus{min-height:60px}
+  .guestbook-card .giscus:empty::before{
+    content:"방명록을 불러오는 중입니다… (연결 설정이 완료되면 이곳에 표시됩니다)";
+    display:block;color:var(--ink-3);font-size:13.5px;padding:8px 0;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-card{padding:24px}
+  .contact-card .lead{margin:0 0 18px;color:var(--ink-2);font-size:14.5px}
+  .contact-list{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .contact-list li{
+    display:flex;align-items:center;gap:16px;
+    padding:14px 0;border-top:1px solid var(--line);
+  }
+  .contact-list li:first-child{border-top:none}
+  .contact-list .label{
+    width:96px;flex-shrink:0;font-size:12px;font-weight:800;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+  }
+  .contact-list a,.contact-list .val{
+    text-decoration:none;font-size:15.5px;color:var(--ink);font-weight:600;word-break:break-all;
+  }
+  .contact-list a:hover{color:var(--navy);text-decoration:underline}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:34px;padding-top:22px;border-top:1px solid var(--line);
+    color:var(--ink-3);font-size:13px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:680px){
+    .topnav nav{gap:14px}
+    .topnav nav a{font-size:13px}
+    .hero{padding:26px 20px 24px}
+    .hero h1{font-size:27px}
+    .exp-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:420px){
+    .brand span{display:none}
+    .topnav nav{gap:11px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="brand">강병석 <span>· Kang ByungSuk</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#expertise">Expertise</a>
+      <a href="#work">Work</a>
+      <a href="#guestbook">Guestbook</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap" id="top">
+
+  <!-- ================= HERO ================= -->
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="pill accent">Human Resources · 채용 &amp; 기술교육</span>
+      <h1>강병석 <span class="en">Kang ByungSuk</span></h1>
+      <p class="tagline">사람의 성장과 조직의 역량을 잇는 HR 담당자</p>
+      <p class="lead">
+        포스코DX 경영지원실 인사그룹에서 채용과 기술교육을 담당합니다.
+        조직이 필요로 하는 인재를 정확히 찾고, 구성원이 지속적으로 성장할 수
+        있는 학습 체계를 설계합니다.
+      </p>
+      <div class="hero-meta">
+        <span class="chip"><b>포스코DX</b> · 경영지원실 인사그룹</span>
+        <span class="chip">전문 분야 <b>채용 · 기술교육</b></span>
+        <span class="chip">Based in <b>대한민국</b></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about">
+    <div class="sec-head">
+      <h2>About</h2>
+      <span class="sub">소개</span>
+    </div>
+    <div class="card about-card">
+      <p>
+        채용과 기술교육을 두 축으로, <strong>인재의 유입부터 성장까지</strong>
+        이어지는 인사 업무를 수행하고 있습니다. 현업 부서와 긴밀히 협업하여
+        직무별 요구 역량을 정의하고, 이를 채용 기준과 교육 커리큘럼으로
+        연결하는 데 강점이 있습니다.
+      </p>
+      <p>
+        단순한 절차 운영을 넘어, <strong>데이터에 근거해 의사결정</strong>하는
+        HR을 지향합니다. 채용 리드타임·이탈률·교육 이수율과 같은 지표를
+        관리하고, 이를 개선하기 위한 프로세스를 지속적으로 다듬어 왔습니다.
+      </p>
+      <p>
+        기술 중심 조직의 특성을 이해하고, <strong>엔지니어와 현업이 신뢰할 수
+        있는 교육 콘텐츠</strong>를 함께 만들어 가는 일에 보람을 느낍니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= EXPERTISE ================= -->
+  <section id="expertise">
+    <div class="sec-head">
+      <h2>Expertise</h2>
+      <span class="sub">전문 분야</span>
+    </div>
+    <div class="tags">
+      <span class="tag">채용 전략 · 실행</span>
+      <span class="tag">기술교육 기획</span>
+      <span class="tag">역량 모델링</span>
+      <span class="tag">커리큘럼 설계</span>
+      <span class="tag">HR 데이터 분석</span>
+      <span class="tag">현업 협업</span>
+    </div>
+    <div class="exp-grid">
+      <div class="card exp">
+        <span class="num">01</span>
+        <h3>채용 · Talent Acquisition</h3>
+        <p>직무 역량 정의부터 채용 브랜딩, 전형 설계, 평가, 온보딩까지 채용 전
+          과정을 설계하고 운영합니다. 현업 협업으로 채용의 정확도와 속도를
+          함께 끌어올립니다.</p>
+      </div>
+      <div class="card exp">
+        <span class="num">02</span>
+        <h3>기술교육 · Technical Learning</h3>
+        <p>기술 직군의 성장 로드맵을 기반으로 교육 체계를 기획합니다. 현업·외부
+          전문가와 협업해 실무에 바로 쓰이는 커리큘럼을 구성하고 성과를
+          관리합니다.</p>
+      </div>
+      <div class="card exp">
+        <span class="num">03</span>
+        <h3>HR 데이터 · People Analytics</h3>
+        <p>채용·교육 지표를 정량적으로 관리하고, 데이터에 근거해 프로세스
+          개선 포인트를 도출합니다.</p>
+      </div>
+      <div class="card exp">
+        <span class="num">04</span>
+        <h3>제도 · 프로세스 · Operations</h3>
+        <p>채용·교육 관련 제도와 업무 프로세스를 표준화하고, 구성원 경험을
+          개선하는 방향으로 지속 고도화합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <!-- ▼ 아래 4개는 채용·기술교육 직무 예시입니다. 실제 성과로 교체하세요. ▼ -->
+  <section id="work">
+    <div class="sec-head">
+      <h2>Selected Work</h2>
+      <span class="sub">주요 성과</span>
+    </div>
+    <div class="work-list">
+
+      <div class="card work">
+        <div class="work-top">
+          <span class="period">2024–2025</span>
+          <h3>신입 기술직 공채 프로세스 개편</h3>
+        </div>
+        <p>현업 부서와 함께 직무별 요구 역량을 재정의하고, 전형 단계와 평가
+          기준을 표준화하여 채용의 일관성과 속도를 개선했습니다.</p>
+        <span class="result">채용 리드타임 약 30% 단축</span>
+      </div>
+
+      <div class="card work">
+        <div class="work-top">
+          <span class="period">2024</span>
+          <h3>신입 엔지니어 기술 온보딩 과정 신설</h3>
+        </div>
+        <p>입사 초기 기술 역량 격차를 줄이기 위해 현업 멘토와 협업하여 실무
+          중심의 온보딩 커리큘럼을 설계·운영했습니다.</p>
+        <span class="result">3개월 조기 전력화율 향상</span>
+      </div>
+
+      <div class="card work">
+        <div class="work-top">
+          <span class="period">2023</span>
+          <h3>직무 역량 기반 기술교육 체계 구축</h3>
+        </div>
+        <p>기술 직군의 성장 단계별 필요 역량을 정의하고, 이에 맞춘 교육
+          로드맵과 과정 체계를 수립했습니다.</p>
+        <span class="result">연간 교육 이수율 상승</span>
+      </div>
+
+      <div class="card work">
+        <div class="work-top">
+          <span class="period">2023</span>
+          <h3>채용 데이터 대시보드 도입</h3>
+        </div>
+        <p>채용 단계별 전환율과 리드타임을 시각화하여, 병목 구간을 정량적으로
+          진단하고 개선 우선순위를 도출했습니다.</p>
+        <span class="result">데이터 기반 의사결정 정착</span>
+      </div>
+
+    </div>
+  </section>
+  <!-- ▲ 예시 끝 ▲ -->
+
+  <!-- ================= GUESTBOOK ================= -->
+  <section id="guestbook">
+    <div class="sec-head">
+      <h2>Guestbook</h2>
+      <span class="sub">방명록</span>
+    </div>
+    <div class="card guestbook-card">
+      <p class="lead">방문해 주셔서 감사합니다. 짧은 의견이나 인사를 남겨 주세요.
+        남겨 주신 글은 이 페이지에서 함께 확인할 수 있습니다.</p>
+
+      <!--
+        ┌─────────────────────────────────────────────────────────────┐
+        │  방명록 = Giscus (GitHub Discussions 기반 · 무료)             │
+        │                                                               │
+        │  ▶ 연결 방법 (최초 1회만):                                    │
+        │   1. 이 사이트를 올릴 "공개(public)" GitHub 저장소를 만든다.  │
+        │   2. 저장소 Settings → General → Features → Discussions 체크. │
+        │   3. https://github.com/apps/giscus 에서 giscus 앱을 설치하고 │
+        │      해당 저장소에 권한을 부여한다.                           │
+        │   4. https://giscus.app 에 접속해 저장소 이름을 입력하면      │
+        │      아래 data-* 값(repo / repo-id / category / category-id)  │
+        │      을 자동 생성해 준다. 그 값을 아래에 붙여넣는다.          │
+        │                                                               │
+        │  ※ 값을 채우기 전에는 방명록이 표시되지 않습니다(정상).       │
+        └─────────────────────────────────────────────────────────────┘
+      -->
+      <div class="giscus"></div>
+      <script src="https://giscus.app/client.js"
+        data-repo="[GitHub-사용자명/저장소명 입력]"
+        data-repo-id="[repo-id 입력]"
+        data-category="Announcements"
+        data-category-id="[category-id 입력]"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="ko"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <div class="sec-head">
+      <h2>Contact</h2>
+      <span class="sub">연락처</span>
+    </div>
+    <div class="card contact-card">
+      <p class="lead">채용·협업 관련 문의를 환영합니다. 아래 이메일로 연락 주시면
+        성실히 답변드리겠습니다.</p>
+      <ul class="contact-list">
+        <li>
+          <span class="label">Email</span>
+          <a href="mailto:pasmal0320@poscodx.com">pasmal0320@poscodx.com</a>
+        </li>
+        <li>
+          <span class="label">Company</span>
+          <span class="val">포스코DX · 경영지원실 인사그룹</span>
+        </li>
+        <!-- 필요 시 주석을 풀고 값을 채우세요.
+        <li>
+          <span class="label">LinkedIn</span>
+          <a href="https://linkedin.com/in/your-id" target="_blank" rel="noopener">linkedin.com/in/your-id</a>
+        </li>
+        -->
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 강병석 (Kang ByungSuk)</span>
+    <span>Human Resources · 채용 &amp; 기술교육</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
