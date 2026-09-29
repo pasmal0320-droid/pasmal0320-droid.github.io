@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TaskLens — AI 과업 노출 탐색기</title>
-<meta name="description" content="직업 과업의 이론적 AI 노출(GPT-4 평가)과 Claude 대화에서 관측된 과업을 함께 살펴보는 탐색기.">
+<meta name="description" content="AI는 내 직업의 어떤 일을 바꿀 수 있을까? AI로 시간을 줄일 수 있다고 평가된 일(GPT-4 평가)과 실제 AI 대화에서 확인된 일(Claude)을 과업별로 살펴보는 탐색기.">
 <meta property="og:title" content="TaskLens — AI 과업 노출 탐색기">
-<meta property="og:description" content="직업 과업의 이론적 AI 노출과 Claude 대화에서 관측된 과업을 함께 살펴보는 탐색기. 노출은 대체가 아니고, 관측은 사용률이 아닙니다.">
+<meta property="og:description" content="AI는 내 직업의 어떤 일을 바꿀 수 있을까? AI로 시간을 줄일 수 있다고 평가된 일과 실제 AI 대화에서 확인된 일을 과업별로 살펴보세요.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://pasmal0320-droid.github.io/">
 <meta property="og:locale" content="ko_KR">
@@ -43,7 +43,7 @@ h3{font-size:18px;font-weight:700;margin:0}
 .lead{font-size:18px;color:var(--text-muted);margin:0 0 24px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow)}
 .p1tag{font-size:12px;font-weight:600;color:var(--text-muted);border:1px solid var(--border);border-radius:999px;padding:1px 8px;vertical-align:4px;margin-left:6px}
-.divider{margin:72px 0 0;padding-top:8px;border-top:1px solid var(--border)}
+.divider{margin-top:72px;padding-top:8px;border-top:1px solid var(--border)}
 
 /* nav */
 nav.top{position:sticky;top:0;z-index:50;height:56px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
@@ -62,10 +62,11 @@ nav.top .wrap{display:flex;align-items:center;height:100%;gap:16px}
 .search{position:relative;max-width:640px;margin:8px 0 28px}
 .search input{width:100%;height:52px;border-radius:12px;border:1px solid var(--border);background:var(--surface);padding:0 16px 0 46px;font-size:16px;box-shadow:var(--shadow)}
 .search svg{position:absolute;left:16px;top:16px;color:var(--text-muted)}
-.ac{position:absolute;left:0;right:0;top:58px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-h);overflow:hidden;z-index:40;display:none}
+.ac{position:absolute;left:0;right:0;top:58px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-h);overflow-y:auto;overscroll-behavior:contain;max-height:284px;z-index:40;display:none}
 .ac.open{display:block}
 .ac div{display:flex;gap:10px;align-items:baseline;padding:10px 14px;cursor:pointer}
-.ac div[aria-selected="true"],.ac div:hover{background:var(--surface-2)}
+.ac [role=option][aria-selected="true"],.ac [role=option]:hover{background:var(--surface-2)}
+.ac .ach{position:sticky;top:0;z-index:1;display:block;padding:6px 14px;font-size:12px;color:var(--text-muted);background:var(--surface);border-bottom:1px solid var(--border);cursor:default}
 .ac b{font-weight:700;white-space:nowrap}.ac span{color:var(--text-muted);font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ac code{font-size:12px;color:var(--text-muted)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .stat{padding:20px 22px;border-top:4px solid var(--c)}
@@ -92,7 +93,7 @@ nav.top .wrap{display:flex;align-items:center;height:100%;gap:16px}
 .badge.core{background:var(--text);color:var(--bg)}
 .badge.rev{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);font-weight:600}
 .badge.warn{background:none;border:1px dashed var(--null)}
-.mini{display:grid;grid-template-columns:58px 1fr 44px;gap:4px 8px;align-items:center;font-size:12px;margin-top:10px}
+.mini{display:grid;grid-template-columns:104px 1fr 40px;gap:4px 8px;align-items:center;font-size:12px;margin-top:10px}
 .more{display:block;margin:20px auto 0;border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:8px 18px;cursor:pointer}
 
 /* bars */
@@ -118,6 +119,10 @@ nav.top .wrap{display:flex;align-items:center;height:100%;gap:16px}
 .tip{position:relative;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--border);font-size:11px;color:var(--text-muted);cursor:help;background:none;padding:0;font-weight:600;flex:none}
 .tip .bub{display:none;position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:max-content;max-width:280px;background:var(--text);color:var(--bg);font-size:13px;font-weight:400;line-height:1.5;padding:12px;border-radius:8px;z-index:30;text-align:left;white-space:normal}
 .tip:hover .bub,.tip:focus .bub,.tip.on .bub{display:block}
+.tip.pill{width:auto;height:auto;border-radius:999px;padding:1px 9px;font-size:12px;font-weight:400;cursor:pointer;background:var(--surface-2);border-color:transparent;white-space:nowrap}
+.tip.pill.o{background:none;border:1px solid var(--border)}
+.tip.pill.warn{background:none;border:1px dashed var(--null)}
+.tip.pill .bub{font-weight:400;color:var(--bg)}
 .task{padding:16px 18px;margin-bottom:10px}
 .task .top{display:flex;gap:10px;align-items:flex-start}
 .task .txt{flex:1;min-width:0}
@@ -125,7 +130,31 @@ nav.top .wrap{display:flex;align-items:center;height:100%;gap:16px}
 .task .txt .en{font-size:13px;color:var(--text-muted);margin-top:2px}
 .task .imp{font-size:12px;color:var(--text-muted);white-space:nowrap}
 .flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.bars{display:grid;grid-template-columns:52px 1fr minmax(120px,auto);gap:6px 10px;align-items:center;margin-top:12px;font-size:13px}
+.tcount{font-size:13px;color:var(--text-muted);white-space:nowrap}
+.glance{padding:20px 22px;margin-bottom:16px}
+.gsum{list-style:none;margin:10px 0 16px;padding:0;display:grid;gap:10px;font-size:14px;line-height:1.6}
+.gsum li{padding-left:14px;border-left:3px solid var(--c)}
+.gsum .src{display:block;margin-top:2px}
+.gmap{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px;align-items:stretch;font-size:13px}
+.gmap .gh{color:var(--text-muted);font-weight:600;text-align:center;align-self:end;line-height:1.35}
+.gmap .gr{text-align:right;align-self:center;padding-right:4px}
+.gcell{border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:6px;min-height:52px;transition:border-color .15s ease-out,box-shadow .15s ease-out}
+.gcell .gn{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.gcell .gp{font-size:12px;color:var(--text-muted)}
+.gcell.pos_seen{background:color-mix(in srgb,var(--exp) 16%,var(--surface))}
+.gcell.pos_unseen{background:color-mix(in srgb,var(--exp) 7%,var(--surface))}
+.gcell.neg_seen{background:color-mix(in srgb,var(--use) 10%,var(--surface))}
+.gcell.neg_unseen{background:var(--surface-2)}
+.gcell:hover:not(:disabled){border-color:var(--accent)}
+.gcell.on{border:2px solid var(--accent);box-shadow:var(--shadow-h)}
+.gcell:disabled{cursor:default;opacity:.55}
+.linkbtn{border:0;background:none;padding:0;margin-left:4px;color:var(--accent);text-decoration:underline;cursor:pointer;font-size:12px}
+.linkbtn.on{font-weight:700}
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 14px;margin-bottom:10px;border:1px solid var(--accent);border-radius:10px;font-size:14px;background:color-mix(in srgb,var(--accent) 6%,var(--surface))}
+.bars{display:grid;grid-template-columns:104px 1fr minmax(120px,auto);gap:6px 10px;align-items:center;margin-top:12px;font-size:13px}
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:3px;height:8px}
+.steps i{border-radius:99px;background:var(--surface-2)}
+.steps i.on{background:var(--exp)}
 .bars .k{color:var(--text-muted)}
 .bars .lbl{display:flex;align-items:center;gap:4px}
 .dhead{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
@@ -173,7 +202,7 @@ footer{padding:48px 0 64px;color:var(--text-muted);font-size:13px}
   .navlinks{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--border);padding:8px 16px}
   .navlinks.open{display:flex}
   .chartbox{height:440px;padding:8px}
-  .bars{grid-template-columns:48px 1fr}.bars .lbl{grid-column:2;margin-top:-4px}
+  .bars{grid-template-columns:1fr;gap:4px}.bars .k{margin-top:6px}
 }
 </style>
 </head>
@@ -193,16 +222,18 @@ footer{padding:48px 0 64px;color:var(--text-muted);font-size:13px}
 <!-- ===== P0 ===== -->
 <!-- S1 히어로 -->
 <header class="hero wrap">
-  <div class="kicker">TaskLens · 직업 과업의 이론적 AI 노출과 Claude 대화에서 관측된 과업을 함께 살펴보는 탐색기</div>
-  <h1>AI는 직업이 아니라 <span style="color:var(--exp)">과업</span>에 닿습니다.<br>노출은 대체가 아니고, 관측은 사용률이 아닙니다.</h1>
-  <p class="lead"><span id="heroCount">미국 직업과 과업</span>마다 GPT-4가 평가한 이론적 노출과 Claude 대화에서 관측된 비중을 나란히 봅니다.</p>
+  <div class="kicker">AI 과업 탐색기</div>
+  <h1>AI는 내 직업의 <span style="color:var(--exp)">어떤 일</span>을 바꿀 수 있을까?</h1>
+  <p class="lead">직업을 검색해 보세요. AI로 시간을 줄일 수 있다고 평가된 일과 실제 AI 대화에서 확인된 일을 과업별로 살펴보세요.</p>
+  <p class="muted" style="margin:0 0 4px" id="heroIntro">각 과업의 AI 적용 가능성과 AI 대화에서 차지한 비중도 알려드립니다.</p>
   <div class="search" role="combobox" aria-haspopup="listbox" aria-owns="ac" aria-expanded="false" id="searchBox">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    <input id="q" type="search" autocomplete="off" placeholder="직업을 검색하세요 (예: 회계사, CPA, Software Developer, 15-1252)" aria-label="직업 검색" aria-autocomplete="list" aria-controls="ac">
+    <input id="q" type="search" autocomplete="off" placeholder="직업을 입력하세요. 예: 인사 담당자, 프로그램 개발자" aria-label="검색" aria-autocomplete="list" aria-controls="ac">
     <div class="ac" id="ac" role="listbox"></div>
   </div>
   <div class="stats" id="stats"></div>
-  <div class="chips" id="quick" aria-label="검수 직업 바로 가기"></div>
+  <p class="small muted" style="margin:10px 0 0">세 숫자는 각각 계산 대상이 다릅니다. 서로 빼거나 곱해서 해석하지 마세요.</p>
+  <div class="chips" id="quick" aria-label="최근 찾아본 직업"></div>
 </header>
 
 <!-- S3 직업 상세 -->
@@ -211,13 +242,10 @@ footer{padding:48px 0 64px;color:var(--text-muted);font-size:13px}
 <!-- S2 직업 탐색 -->
 <section id="explore" class="wrap">
   <h2>직업 탐색</h2>
-  <p class="muted" style="margin:0">카드의 막대 두 줄은 <b style="color:var(--exp)">이론적 노출</b>(GPT-4 평가 β)과 <b style="color:var(--use)">관측 노출</b>(Anthropic 공식 지표)입니다. 과업별 값은 직업을 눌러 확인하세요.</p>
+  <p class="muted" style="margin:0">카드의 막대 두 줄은 <b style="color:var(--exp)">AI 적용 가능성</b>(GPT-4 평가)과 <b style="color:var(--use)">Claude 관측 노출</b>(Anthropic 지표)입니다. 과업별 값은 직업을 눌러 확인하세요.</p>
   <div class="toolbar">
     <input id="fq" type="search" placeholder="목록에서 찾기" aria-label="목록 필터">
-    <div class="seg" id="fset" role="group" aria-label="목록 범위">
-      <button aria-pressed="true" data-v="all">전체</button><button aria-pressed="false" data-v="reviewed">검수 직업</button>
-    </div>
-    <select id="fs" aria-label="정렬"><option value="emp">고용 많은 순</option><option value="exp">이론적 노출 높은 순</option><option value="obs">관측 노출 높은 순</option><option value="gap">간극 순 (이론 노출 백분위 − 관측 노출 백분위)</option></select>
+    <select id="fs" aria-label="정렬"><option value="emp">고용 많은 순</option><option value="exp">AI 적용 가능성 높은 순</option><option value="obs">Claude 관측 노출 높은 순</option><option value="gap">간극 순 (AI 적용 가능성 백분위 − Claude 관측 노출 백분위)</option></select>
     <select id="fg" aria-label="직군 필터 (P1)"><option value="">전체 직군</option></select>
     <select id="fz" aria-label="Job Zone 필터 (P1)"><option value="">전체 숙련 수준</option></select>
     <button class="btn" id="freset">필터 해제</button>
@@ -233,22 +261,22 @@ footer{padding:48px 0 64px;color:var(--text-muted);font-size:13px}
     <div class="card box">
       <h3>지표 (분모 · 시점 · 출처)</h3>
       <ul>
-        <li><b style="color:var(--exp)">이론적 노출</b>: GPT-4가 평가한 "LLM(과 추가 도구)이 과업 수행 시간을 절반 이상 줄일 수 있는가"입니다. 과업은 E0 없음, E2 도구가 있어야 노출, E1 LLM만으로 노출로 나뉩니다. 직업 값은 β = E1 비중 + 0.5 × E2 비중이고, 분모는 그 직업의 과업입니다. <span class="src">GPT-4 평가 · Eloundou 외 2023</span></li>
-        <li><b style="color:var(--use)">Claude 대화 관측 비중</b>: Claude.ai 대화 전체 중 해당 과업으로 분류된 대화의 비중(%)입니다. <b>그 직업 종사자의 AI 사용률이 아니며</b>, 같은 문구의 과업이 여러 직업에 연결되므로 직업 단위로 합산하지 않습니다. <span class="src">분모: Claude 대화 표본 전체 · AEI 2025-03</span></li>
-        <li><b style="color:var(--auto)">자동화</b> · <b style="color:var(--aug)">보조</b>: 해당 과업 대화 중 AI에 맡기는 방식(지시·피드백 루프)과 사람이 함께 일하는 방식(반복·학습·검증)의 비율입니다. <span class="src">분모: 분류 가능한 대화 · AEI 2025-03</span></li>
-        <li><b style="color:var(--use)">관측 노출</b>(직업): Anthropic이 공개한 직업별 관측 노출 지표를 그대로 씁니다. 우리가 과업 값을 합산해 만든 값이 아닙니다. <span class="src">AEI labor_market_impacts · 2026-03</span></li>
-        <li>과업 결합 상태: <b>관측되지 않음</b>은 공개 기준 이상으로 관측되지 않았다는 뜻이고, <b>연결되지 않음</b>은 과업표 버전 차이로 연결하지 못했다는 뜻입니다. <b>공유 과업</b>은 다른 직업 코드에만 연결된 문구이고, <b>코드 변경 대응</b>은 옛 직업 코드(2010)를 공식 대응표로 바꿔 연결했다는 뜻입니다.</li>
+        <li><b style="color:var(--exp)">AI 적용 가능성</b>: <span data-txt="exp"></span> 과업은 E0(해당 없음), E2(도구가 있어야 가능), E1(AI만으로 가능)으로 나뉘고, 직업 점수는 E1 비중 + 0.5 × E2 비중입니다. <span class="src">분모: 그 직업의 과업 · GPT-4 평가 · Eloundou 외, 2023</span></li>
+        <li><b style="color:var(--use)">Claude 관측 노출</b>: <span data-txt="obs"></span> <span class="src">Anthropic 지표를 그대로 사용 · AEI 노동시장 영향, 2026</span></li>
+        <li><b style="color:var(--use)">과업별 대화 비중</b>: <span data-txt="share"></span> 같은 문구의 과업이 여러 직업에 연결되므로 직업 단위로 합산하지 않습니다. <span class="src">분모: 분석한 Claude 대화 전체 · AEI, 2025</span></li>
+        <li><b style="color:var(--auto)">AI에 맡김</b> · <b style="color:var(--aug)">사람과 함께 작업함</b>: 해당 과업 대화 중 AI에 맡기는 방식(지시·피드백 반복)과 사람이 함께 작업하는 방식(배우기·다듬기·검토하기)의 비율입니다. <span class="src">분모: 방식을 분류할 수 있는 대화 · AEI, 2025</span></li>
+        <li>과업 상태 표시: <span id="statusList"></span></li>
       </ul>
     </div>
     <div class="card box">
       <h3>한계</h3>
       <ol>
-        <li>노출도는 "AI가 과업 시간을 크게 줄일 수 있는가"에 대한 GPT-4 평가이며, 일자리 대체를 뜻하지 않습니다.</li>
+        <li>AI 적용 가능성은 "AI가 과업 시간을 크게 줄일 수 있는가"에 대한 GPT-4 평가이며, 일자리가 사라진다는 뜻이 아닙니다.</li>
         <li>모든 데이터는 미국 직업 체계 기준입니다. 한국의 직무 구성과 다를 수 있습니다.</li>
-        <li>Claude 대화 관측 비중은 특정 AI 서비스(Claude.ai)의 특정 기간 대화 중 비중이며, 해당 직업 종사자의 AI 사용률이 아닙니다.</li>
-        <li>과업 결합 결과는 5가지로 표시합니다(관측, 공유 과업, 관측되지 않음, 연결되지 않음, 다중). 매칭률은 아래 출처 섹션에 공개합니다 (<span id="lim-match"></span>).</li>
-        <li>AEI 과업표의 옛 직업 코드(2010)는 O*NET 공식 대응표로 2019 코드로 바꿨습니다. 나뉘거나 합쳐진 직업은 "코드 변경 대응"으로 표시합니다.</li>
-        <li>한국어 직업명·과업 번역은 AI 기계 번역입니다. 검수 직업 5개 외에는 자동 결합 결과이며 수동 검수를 거치지 않았습니다.</li>
+        <li>과업별 대화 비중과 Claude 관측 노출은 특정 AI 서비스(Claude)의 특정 기간 자료이며, 해당 직업 종사자 중 AI를 쓰는 사람의 비율이 아닙니다.</li>
+        <li>과업 상태는 5가지로 표시합니다(대화에서 확인됨, 다른 직업에도 있는 과업, 공개 자료에서 확인 안 됨, 자료 연결 안 됨, 여러 항목과 일치). 연결 비율은 아래 출처 섹션에 공개합니다 (<span id="lim-match"></span>).</li>
+        <li>Claude 자료 과업표의 옛 직업 코드(2010)는 O*NET 공식 대응표로 2019 코드로 바꿨습니다. 나뉘거나 합쳐진 직업은 "코드 변경 대응"으로 표시합니다.</li>
+        <li>한국어 직업명과 과업은 AI 번역입니다. 한국어 과업은 5개 직업에서 먼저 제공하며, 나머지 직업은 과업 원문(영문)을 보여 줍니다.</li>
         <li>본 페이지는 교육 목적이며 커리어·투자·법률 조언이 아닙니다.</li>
       </ol>
     </div>
@@ -259,7 +287,7 @@ footer{padding:48px 0 64px;color:var(--text-muted);font-size:13px}
 <section id="data" class="wrap">
   <h2>데이터와 출처</h2>
   <div class="card tablewrap" style="margin-top:16px"><table class="t" id="srcTable"></table></div>
-  <h3 style="margin:24px 0 8px">과업 결합 5분류 (Claude 대화 관측, 전체 과업)</h3>
+  <h3 style="margin:24px 0 8px">과업 상태 5분류 (Claude 자료 연결, 전체 과업)</h3>
   <div class="card tablewrap"><table class="t" id="matchTable"></table></div>
   <p class="muted small" id="notes"></p>
 </section>
@@ -267,10 +295,12 @@ footer{padding:48px 0 64px;color:var(--text-muted);font-size:13px}
 <!-- ===== P1 ===== -->
 <!-- S4 전체 지형 -->
 <section id="landscape" class="wrap divider">
-  <h2>전체 지형: 이론적 노출 vs 관측 노출<span class="p1tag">P1</span></h2>
-  <p class="muted" style="margin:0 0 16px">점 하나가 직업 하나입니다. 가로축은 이론적 노출(GPT-4 평가 β), 세로축은 Anthropic의 직업별 관측 노출(2026-03)이고, 점 크기는 고용 규모(OEWS May 2025)입니다. 점을 누르면 상세로 이동합니다. <span id="scatterNote"></span></p>
-  <div class="card chartbox"><canvas id="scatter" role="img" aria-label="직업별 이론적 노출과 관측 노출의 산점도"></canvas></div>
+  <h2>전체 지형: AI 적용 가능성 vs Claude 관측 노출<span class="p1tag">P1</span></h2>
+  <p style="margin:0 0 6px"><b>그래프 읽는 법</b>: 점 하나는 직업 하나입니다. 오른쪽일수록 AI 적용 가능성이 높고, 위쪽일수록 Claude 관측 노출 지표가 높습니다. 선을 기준으로 한 네 구역은 직업을 살펴보기 쉽게 나눈 것이며, 좋고 나쁨을 뜻하지 않습니다.</p>
+  <ul class="muted small" id="scatterNote" style="margin:0 0 16px;padding-left:18px"></ul>
+  <div class="card chartbox"><canvas id="scatter" role="img" aria-label="직업별 AI 적용 가능성과 Claude 관측 노출의 산점도"></canvas></div>
   <div class="quads" id="quads"></div>
+  <p class="muted" style="margin:16px 0 0">두 지표가 다른 이유는 이 자료만으로 알 수 없습니다. 직업의 업무 방식, 사용 가능한 도구, 자료의 범위 등을 추가로 살펴봐야 합니다.</p>
 </section>
 
 <!-- S5 비교 -->
@@ -280,25 +310,10 @@ footer{padding:48px 0 64px;color:var(--text-muted);font-size:13px}
   <div class="cmp" id="cmp"></div>
 </section>
 
-<!-- S8 만든 사람 -->
-<section id="about" class="wrap">
-  <h2>만든 사람</h2>
-  <div class="cols2" style="margin-top:16px">
-    <div class="card box">
-      <h3>강병석 · KAIST 기술경영전문대학원</h3>
-      <p class="muted">ITM.690 인공지능 경영과 법 · 과제 1. 데이터 결합부터 페이지 제작까지 AI와 대화하며 만든 바이브 코딩 프로젝트입니다.</p>
-      <p style="margin:0"><b>연구 질문</b>: AI는 직업 전체가 아니라 어떤 과업부터 스며드는가? 이론적 노출과 관측 사이의 간극은 규제·책임·데이터 장벽을 보여 주는가?</p>
-    </div>
-    <div class="card box" style="border-style:dashed">
-      <h3>다음 프로젝트 자리</h3>
-      <p class="muted" style="margin-bottom:0">과제 2 결과물(AI 특허 지도 등)을 이곳에 연결할 예정입니다.</p>
-    </div>
-  </div>
-</section>
 </main>
 <!-- 데이터: data.js(파일 더블클릭·서버 모두 동작) → 없으면 data.json fetch -->
 <script src="data.js"></script>
-<footer class="wrap">© 2026 강병석 · O*NET 31.0 Database by U.S. Department of Labor/ETA, CC BY 4.0 (한국어 번역·가공은 작성자 수행) · Exposure labels: Eloundou et al. (2023), openai/GPTs-are-GPTs, MIT License (GPT-4 평가 기준) · Anthropic Economic Index (release 2025-03-27; labor_market_impacts), 데이터셋 카드 기재 라이선스(데이터 CC-BY) · BLS OEWS May 2025</footer>
+<footer class="wrap">© 2026 KAIST Innovation and Technology Management 강병석 ·O*NET 31.0 Database by U.S. Department of Labor/ETA, CC BY 4.0 (한국어 번역·가공은 작성자 수행) · Exposure labels: Eloundou et al. (2023), openai/GPTs-are-GPTs, MIT License (GPT-4 평가 기준) · Anthropic Economic Index (release 2025-03-27; labor_market_impacts), 데이터셋 카드 기재 라이선스(데이터 CC-BY) · BLS OEWS May 2025</footer>
 
 <script>
 'use strict';
@@ -334,13 +349,22 @@ const fmt = {
   wage: v => v == null ? '—' : '$' + v.toLocaleString(),
   pct: (a, b) => b ? Math.round(a / b * 100) + '%' : '—',
 };
-const AEI = {
-  exact: ['관측', '--use', null],
-  shared: ['공유 과업', '--use', '이 문구는 AEI 과업표에서 다른 직업 코드에만 연결되어 있습니다. 비중은 문구 단위 값입니다.'],
-  unobserved: ['관측되지 않음', '--null', 'Claude 대화에서 공개 기준 이상으로 관측되지 않았습니다. 0이라는 뜻이 아닙니다.'],
-  unlinked: ['연결되지 않음', '--null', 'AEI 과업표(E6)에 이 과업이 없습니다. O*NET 31.0의 새 과업이거나 문구가 바뀐 경우입니다.'],
-  multi: ['다중 매칭', '--null', '여러 행에 동시에 대응되어 한 값을 고를 수 없어 연결하지 않았습니다.'],
+/* 화면 문구: 지표 설명과 과업 상태 안내 */
+const TXT = {
+  exp: 'GPT-4가 평가한 이 직업 과업의 AI 노출 점수입니다. 0~1 사이 값이며, 도구가 필요한 과업은 절반만 반영합니다. 높다고 일자리가 사라진다는 뜻은 아닙니다.',
+  obs: '이 직업의 과업이 Claude에서 업무 목적으로, 특히 자동화 방식으로 얼마나 확인됐는지 나타내는 Anthropic의 지표입니다. 종사자 중 AI를 사용하는 사람의 비율은 아닙니다.',
+  share: '분석한 Claude 대화 중 이 과업으로 분류된 대화의 비중입니다. 이 직업의 종사자만을 조사한 값은 아닙니다.',
 };
+const STATUS = {
+  exact: ['대화에서 확인됨', 'Claude 대화에서 이 과업으로 분류된 사례가 공개 자료에 있습니다. 이 일을 하는 사람이 직접 Claude를 썼다는 뜻은 아닙니다.'],
+  unobserved: ['공개 자료에서 확인 안 됨', '공개 기준을 충족하는 관측 값이 없습니다. 실제 사용이 0건이라는 뜻은 아닙니다.'],
+  unlinked: ['자료 연결 안 됨', '과업표의 버전이나 문구 차이 등으로 Claude 자료의 해당 항목을 연결하지 못했습니다. 관측되지 않았다는 뜻은 아닙니다.'],
+  shared: ['다른 직업에도 있는 과업', '같은 과업 문구가 다른 직업 코드에 연결돼 있습니다. 표시된 대화 비중을 이 직업만의 사용량으로 해석할 수 없습니다.'],
+  multi: ['여러 항목과 일치', '연결 후보가 여러 개라 어느 값이 맞는지 결정할 수 없어 표시하지 않았습니다.'],
+  noauto: ['대화 방식 분류 안 됨', "이 과업에 대해 'AI에 맡김'과 '사람과 함께 작업함'을 구분한 값을 사용할 수 없습니다."],
+};
+// 누르면 설명이 보이는 상태 표시 (button 안에서는 쓰지 말 것)
+const pill = (key, cls = '') => `<button class="tip pill ${cls}" type="button">${STATUS[key][0]}<span class="bub" role="tooltip">${STATUS[key][1]}</span></button>`;
 
 /* ---------- 로드 (F1) ---------- */
 (window.TASKLENS_DATA ? Promise.resolve(window.TASKLENS_DATA)
@@ -362,7 +386,13 @@ function init(d) {
     OCC.forEach(o => { o[p] = o[k] == null ? null : (lt(o[k]) + le(o[k])) / 2 / a.length * 100; });
   }
   OCC.forEach(o => { o._gap = o._pExp == null || o._pObs == null ? null : o._pExp - o._pObs; });
+  // 대화 비중 순위용: 관측된 과업 값(과업 문구 중복 제거)을 정렬
+  const seenText = new Map();
+  OCC.forEach(o => o.tasks.forEach(t => { if (t.obs_share != null) seenText.set(t.text_en.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim(), t.obs_share); }));
+  OBS_SORTED = [...seenText.values()].sort((a, b) => a - b);
   d.groups.forEach(g => GROUP[g.code] = g);
+  document.querySelectorAll('[data-txt]').forEach(el => el.textContent = TXT[el.dataset.txt]);
+  $('#statusList').innerHTML = ['exact', 'shared', 'unobserved', 'unlinked', 'multi', 'noauto'].map(k => pill(k)).join(' ') + ' <span class="small muted">(누르면 설명이 보입니다)</span>';
   heroStats(); quick(); filters(); renderList(); sources(); drawChart(); quads(); renderCompare();
   $('#loading').classList.add('hide');
   route();
@@ -381,20 +411,38 @@ function heroStats() {
     nt++;
     if (t.exp != null) { n++; if (t.exp > 0) exp++; }
     const m = t.aei_match;
-    if (m && m !== 'unlinked') { linked++; if (m === 'exact' || m === 'shared') seen++; }
+    if (m && m !== 'unlinked') { linked++; if (m === 'exact') seen++; }
     if (t.auto != null && t.obs_share) texts.set(t.text_en.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim(), t);
   }
   for (const t of texts.values()) { w += t.obs_share; aug += t.obs_share * (1 - t.auto); }
-  $('#heroCount').textContent = `미국 직업 ${OCC.length.toLocaleString()}개, 과업 ${(nt / 10000).toFixed(1)}만 개`;
+  $('#heroIntro').textContent = `직업 ${OCC.length.toLocaleString()}개의 과업을 탐색할 수 있습니다. 각 과업의 AI 적용 가능성과 AI 대화에서 차지한 비중도 알려드립니다.`;
   const card = (c, v, txt, src) => `<div class="card stat" style="--c:var(${c})"><div class="v num">${v}</div><p>${txt}</p><div class="src">${src}</div></div>`;
   $('#stats').innerHTML =
-    card('--exp', fmt.pct(exp, n), 'O*NET 과업 중 LLM에 노출된 과업 비율 (E1+E2)', `분모: GPT-4 라벨이 연결된 과업 ${n.toLocaleString()}개 · ${SRC.exp}`) +
-    card('--use', fmt.pct(seen, linked), 'O*NET 과업 중 Claude 대화에서 관측된 과업 비율', `분모: AEI 과업표(E6)와 연결된 과업 ${linked.toLocaleString()}개 · ${SRC.aei}`) +
-    card('--aug', fmt.pct(aug, w), '관측된 대화 중 사람과 협업하는 보조형 비중', `분모: 자동화/보조로 분류 가능한 대화. 과업 문구 ${texts.size.toLocaleString()}개(중복 제거)의 관측 비중으로 가중 · ${SRC.aei}`);
+    card('--exp', fmt.pct(exp, n), 'AI로 작업 시간을 크게 줄일 수 있다고 평가된 과업',
+      `GPT-4가 평가한 과업 ${n.toLocaleString()}개 중, AI만으로 또는 AI에 추가 도구를 붙이면 작업 시간을 절반 이상 줄일 수 있다고 본 과업의 비율 · Eloundou 외, 2023`) +
+    card('--use', fmt.pct(seen, linked), 'AI 자료와 연결 가능한 과업 중 대화에서 확인된 과업',
+      `직업 코드와 과업 문구가 정확히 연결된 ${seen.toLocaleString()}개 ÷ 연결 가능한 과업 ${linked.toLocaleString()}개 · AEI, 2025`) +
+    card('--aug', fmt.pct(aug, w), 'AI에 맡기지 않고 사람이 함께 작업한(배우기·다듬기·검토하기) 비중',
+      `과업 문구 ${texts.size.toLocaleString()}개, 중복 없이 대화 비중으로 가중 · AEI, 2025`);
+}
+const RECENT_KEY = 'tasklens.recent', RECENT_MAX = 10;
+function getRecent() { try { return (JSON.parse(localStorage.getItem(RECENT_KEY)) || []).filter(c => BY[c]); } catch (e) { return []; } }
+function addRecent(code) {
+  const list = [code, ...getRecent().filter(c => c !== code)].slice(0, RECENT_MAX);   // 중복은 하나로, 최근 것이 앞
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(list)); } catch (e) {}
+  quick();
 }
 function quick() {
-  $('#quick').innerHTML = '<span class="muted small" style="align-self:center">검수 직업</span>' + REVIEW.filter(c => BY[c]).map(c => `<button class="chip" data-c="${c}">${esc(title(BY[c]))}</button>`).join('');
-  $('#quick').onclick = e => { const c = e.target.dataset.c; if (c) go(c); };
+  const recent = getRecent();
+  const list = recent.length ? recent : REVIEW.filter(c => BY[c]);   // 기록이 없으면 추천 직업
+  $('#quick').innerHTML = `<span class="muted small" style="align-self:center">${recent.length ? '최근 찾아본 직업' : '추천 직업'}</span>` +
+    list.map(c => `<button class="chip" data-c="${c}">${esc(title(BY[c]))}</button>`).join('') +
+    (recent.length ? '<button class="chip" data-clear="1" style="border-style:dashed;color:var(--text-muted)">기록 지우기</button>' : '');
+  $('#quick').onclick = e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.clear) { try { localStorage.removeItem(RECENT_KEY); } catch (err) {} quick(); }
+    else go(b.dataset.c);
+  };
 }
 
 /* ---------- 검색 (F2) ---------- */
@@ -415,21 +463,43 @@ function search(text, n) {
   }
   return res.sort((a, b) => a[0] - b[0] || a[1] - b[1]).slice(0, n).map(r => ({ o: r[2], via: r[3] }));
 }
-q.addEventListener('input', () => { acItems = search(q.value, 8); acIdx = acItems.length ? 0 : -1; paintAc(); });
-function paintAc() {
-  ac.innerHTML = acItems.map(({ o, via }, i) => `<div role="option" id="ac${i}" aria-selected="${i === acIdx}" data-c="${o.code}"><b>${esc(title(o))}</b><span>${via ? '직함 일치: ' + esc(via) : esc(o.title_en)}</span><code>${o.code}</code></div>`).join('')
-    || (q.value.trim() ? '<div class="muted" style="cursor:default">검색 결과가 없습니다</div>' : '');
-  const open = !!q.value.trim(); ac.classList.toggle('open', open); $('#searchBox').setAttribute('aria-expanded', open);
+let ALL_SORTED = null;   // 전체 직업 가나다순 (처음 열 때 한 번 정렬)
+function openAc() {
+  if (!D) return;
+  const text = q.value.trim();
+  if (text) acItems = search(text, Infinity);
+  else acItems = (ALL_SORTED ||= [...OCC].sort((a, b) => title(a).localeCompare(title(b), 'ko'))).map(o => ({ o, via: null }));
+  acIdx = text && acItems.length ? 0 : -1;
+  paintAc(text ? `검색 결과 ${acItems.length.toLocaleString()}개` : `전체 직업 ${acItems.length.toLocaleString()}개 · 가나다순 · 스크롤해서 고르세요`);
+}
+q.addEventListener('input', openAc);
+q.addEventListener('focus', openAc);
+q.addEventListener('click', () => { if (!ac.classList.contains('open')) openAc(); });
+function paintAc(head) {
+  ac.innerHTML = `<div class="ach">${head}</div>` + (acItems.map(({ o, via }, i) => `<div role="option" id="ac${i}" aria-selected="${i === acIdx}" data-c="${o.code}"><b>${esc(title(o))}</b><span>${via ? '별칭 일치: ' + esc(via) : esc(o.title_en)}</span><code>${o.code}</code></div>`).join('')
+    || '<div class="muted" style="cursor:default;padding:10px 14px">검색 결과가 없습니다</div>');
+  ac.scrollTop = 0;
+  ac.classList.add('open'); $('#searchBox').setAttribute('aria-expanded', true);
   q.setAttribute('aria-activedescendant', acIdx >= 0 ? 'ac' + acIdx : '');
 }
+function setActive(i) {   // 키보드 이동: 전체를 다시 그리지 않고 선택만 옮김
+  ac.querySelector('[aria-selected="true"]')?.setAttribute('aria-selected', 'false');
+  acIdx = i; const el = $('#ac' + i);
+  if (el) { el.setAttribute('aria-selected', 'true'); el.scrollIntoView({ block: 'nearest' }); }
+  q.setAttribute('aria-activedescendant', el ? 'ac' + i : '');
+}
 q.addEventListener('keydown', e => {
-  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!acItems.length) return; acIdx = (acIdx + (e.key === 'ArrowDown' ? 1 : -1) + acItems.length) % acItems.length; paintAc(); }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault(); if (!ac.classList.contains('open')) openAc(); if (!acItems.length) return;
+    setActive(acIdx < 0 ? (e.key === 'ArrowDown' ? 0 : acItems.length - 1) : (acIdx + (e.key === 'ArrowDown' ? 1 : -1) + acItems.length) % acItems.length);
+  }
   else if (e.key === 'Enter' && acIdx >= 0) { e.preventDefault(); pick(acItems[acIdx].o.code); }
-  else if (e.key === 'Escape') ac.classList.remove('open');
+  else if (e.key === 'Escape') { ac.classList.remove('open'); $('#searchBox').setAttribute('aria-expanded', false); }
 });
-ac.addEventListener('mousedown', e => { const el = e.target.closest('[data-c]'); if (el) { e.preventDefault(); pick(el.dataset.c); } });
+// 목록 안(스크롤바 포함)을 눌러도 입력창 포커스를 유지해 목록이 닫히지 않게 함
+ac.addEventListener('mousedown', e => { e.preventDefault(); const el = e.target.closest('[data-c]'); if (el) pick(el.dataset.c); });
 q.addEventListener('blur', () => setTimeout(() => ac.classList.remove('open'), 100));
-function pick(c) { q.value = ''; ac.classList.remove('open'); go(c); }
+function pick(c) { q.value = ''; ac.classList.remove('open'); q.blur(); go(c); }
 
 /* ---------- 라우팅 (F7) ---------- */
 function go(code) { if (location.hash === '#occ=' + code) route(); else location.hash = 'occ=' + code; }
@@ -446,13 +516,31 @@ function bar(v, max, c) {
   const w = max > 0 ? Math.max(v > 0 ? 2 : 0, v / max * 100) : 0;
   return `<span class="track"><i style="--w:${w}%;--c:var(${c})"></i></span>`;
 }
+// AI 적용 가능성: 연속 점수가 아니라 3단계 등급 → 2칸 단계 표시(해당 없음 □□ · 도구 필요 ■□ · AI만으로 ■■)
+const EXPTXT = {
+  1: ['AI만으로 가능', '1점', 'GPT-4 평가. AI만으로 이 과업의 작업 시간을 절반 이상 줄일 수 있다고 본 과업입니다(E1). 직업 점수에 1점으로 반영됩니다.'],
+  0.5: ['도구가 있으면 가능', '0.5점', "GPT-4 평가. AI에 검색·계산 같은 도구를 붙이면 작업 시간을 절반 이상 줄일 수 있다고 본 과업입니다(E2). 직업 점수에는 0.5점만 반영됩니다."],
+  0: ['해당 없음', '0점', 'GPT-4 평가. AI로 작업 시간을 크게 줄이기 어렵다고 본 과업입니다(E0). 직업 점수에 0점으로 반영됩니다.'],
+};
+function steps(v) {
+  if (v == null) return `<span class="track null"></span>`;
+  const n = v === 1 ? 2 : v === 0.5 ? 1 : 0;
+  return `<span class="steps" aria-hidden="true">${[0, 1].map(i => `<i class="${i < n ? 'on' : ''}"></i>`).join('')}</span>`;
+}
+// 대화 비중: 숫자는 100만 건당 환산, 막대는 관측된 과업 전체 중 순위(백분위)
+let OBS_SORTED = [];
+function shareRank(x) {
+  let lo = 0, hi = OBS_SORTED.length; while (lo < hi) { const m = (lo + hi) >> 1; if (OBS_SORTED[m] < x) lo = m + 1; else hi = m; }
+  const below = lo / OBS_SORTED.length;   // 이 값보다 작은 과업 비율
+  return { pct: Math.max(1, below * 100), top: Math.max(1, Math.round((1 - below) * 100)) };
+}
+const perMillion = x => { const v = x * 10000; return v >= 10 ? Math.round(v).toLocaleString() : v.toFixed(1); };
 function split(a) {
   if (a == null) return `<span class="track null"></span>`;
   return `<span class="track split"><i style="width:${a * 100}%;background:var(--auto)"></i><i style="flex:1;background:var(--aug)"></i></span>`;
 }
 const tip = txt => `<button class="tip" type="button" aria-label="설명">i<span class="bub" role="tooltip">${txt}</span></button>`;
 document.addEventListener('click', e => { document.querySelectorAll('.tip.on').forEach(t => { if (t !== e.target.closest('.tip')) t.classList.remove('on'); }); const t = e.target.closest('.tip'); if (t) t.classList.toggle('on'); });
-const reviewBadge = o => o.review === 'reviewed' ? '<span class="badge rev">검수됨</span>' : '<span class="badge o">자동 결합·미검수</span>';
 
 /* ---------- 목록 (S2) ---------- */
 function filters() {
@@ -460,14 +548,13 @@ function filters() {
   const zn = {1:'거의 준비 불필요',2:'약간의 준비',3:'중간 준비',4:'상당한 준비',5:'광범위한 준비'};
   $('#fz').innerHTML += [1,2,3,4,5].map(z => `<option value="${z}">Job Zone ${z} (${zn[z]})</option>`).join('');
   ['fq', 'fg', 'fz', 'fs'].forEach(id => $('#' + id).addEventListener('input', () => { listLimit = 24; renderList(); if (id === 'fg' || id === 'fz') { drawChart(); quads(); } }));
-  $('#fset').onclick = e => { const b = e.target.closest('button'); if (!b) return; $('#fset').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); listLimit = 24; renderList(); };
   $('#freset').onclick = () => { $('#fq').value = ''; $('#fg').value = ''; $('#fz').value = ''; listLimit = 24; renderList(); drawChart(); quads(); };
   $('#more').onclick = () => { listLimit += 24; renderList(); };
 }
 const inFilter = o => (!$('#fg').value || o.group === $('#fg').value) && (!+$('#fz').value || o.job_zone === +$('#fz').value);
 function renderList() {
-  const text = norm($('#fq').value), scope = $('#fset').querySelector('[aria-pressed="true"]').dataset.v, s = $('#fs').value;
-  let L = OCC.filter(o => inFilter(o) && (scope === 'all' || o.review === 'reviewed') &&
+  const text = norm($('#fq').value), s = $('#fs').value;
+  let L = OCC.filter(o => inFilter(o) &&
     (!text || norm(o.title_ko).includes(text) || norm(o.title_en).includes(text) || o.code.includes(text) || o._alt.some(a => a.includes(text))));
   const key = { exp: o => -(o.exp ?? -1), obs: o => -(o.obs_exp ?? -1), emp: o => -(o.emp ?? -1), gap: o => -(o._gap ?? -999) }[s];
   L.sort((a, b) => key(a) - key(b));
@@ -476,12 +563,12 @@ function renderList() {
     <button class="card occ" data-c="${o.code}">
       <span class="t" style="display:block">${esc(title(o))}</span>
       <span class="e" style="display:block">${esc(o.title_en)}</span>
-      <span class="badge">${esc(GROUP[o.group]?.name_ko || o.group)}</span> ${reviewBadge(o)}
+      <span class="badge">${esc(GROUP[o.group]?.name_ko || o.group)}</span>
       <span class="mini">
-        <span class="muted">이론 노출</span>${bar(o.exp, 1, '--exp')}<span class="lbl">${f2(o.exp)}</span>
-        <span class="muted">관측 노출</span>${bar(o.obs_exp, maxObs, '--use')}<span class="lbl">${o.obs_exp == null ? '없음' : f2(o.obs_exp)}</span>
+        <span class="muted">AI 적용 가능성</span>${bar(o.exp, 1, '--exp')}<span class="lbl">${f2(o.exp)}</span>
+        <span class="muted">Claude 관측 노출</span>${bar(o.obs_exp, maxObs, '--use')}<span class="lbl">${o.obs_exp == null ? '없음' : f2(o.obs_exp)}</span>
       </span>
-      ${s === 'gap' ? `<span class="src" style="display:block;margin-top:8px">${o._gap == null ? '간극 계산 불가 (관측 노출 지표 없음)' : `간극 ${o._gap >= 0 ? '+' : ''}${o._gap.toFixed(0)}p = 이론 노출 백분위 ${o._pExp.toFixed(0)} − 관측 노출 백분위 ${o._pObs.toFixed(0)}`}</span>` : ''}
+      ${s === 'gap' ? `<span class="src" style="display:block;margin-top:8px">${o._gap == null ? '간극 계산 불가 (Claude 관측 노출 지표 없음)' : `간극 ${o._gap >= 0 ? '+' : ''}${o._gap.toFixed(0)}p = AI 적용 가능성 백분위 ${o._pExp.toFixed(0)} − Claude 관측 노출 백분위 ${o._pObs.toFixed(0)}`}</span>` : ''}
     </button>`).join('') || '<div class="empty" style="grid-column:1/-1">조건에 맞는 직업이 없습니다</div>';
   $('#more').style.display = L.length > listLimit ? 'block' : 'none';
   $('#more').textContent = `더 보기 (${L.length - listLimit}개 남음)`;
@@ -490,10 +577,10 @@ $('#list').onclick = e => { const b = e.target.closest('[data-c]'); if (b) go(b.
 
 /* ---------- 상세 (S3) ---------- */
 const TIP = {
-  exp: `이론적 노출 β = (E1 과업 비중) + 0.5 × (E2 과업 비중). 분모: 이 직업의 과업. ${SRC.exp}. 사람 평가 값은 쓰지 않습니다.`,
-  obs: `Anthropic이 공개한 직업별 관측 노출 지표(observed exposure)를 그대로 표시합니다. 과업 값을 합산한 것이 아닙니다. ${SRC.obs}. 0은 공식 지표값 0입니다.`,
-  share: `Claude.ai 대화 전체 중 이 과업으로 분류된 대화의 비중. 이 직업 종사자의 AI 사용률이 아닙니다. ${SRC.aei}.`,
-  auto: `이 과업 대화 중 AI에 맡기는 방식(지시+피드백 루프)의 비율. 분모: 자동화/보조로 분류 가능한 대화. ${SRC.aei}.`,
+  exp: `점수 = (E1 과업 비중) + 0.5 × (E2 과업 비중). 분모: 이 직업의 과업. ${SRC.exp}. 사람 평가 값은 쓰지 않습니다.`,
+  obs: `Anthropic이 공개한 직업별 지표(observed exposure)를 그대로 표시합니다. 과업 값을 합산한 것이 아닙니다. ${SRC.obs}. 0은 지표값 0입니다.`,
+  share: `${TXT.share} ${SRC.aei}.`,
+  auto: `이 과업 대화 중 AI에 맡기는 방식(지시·피드백 반복)과 사람과 함께 작업하는 방식(배우기·다듬기·검토하기)의 비율. 분모: 방식을 분류할 수 있는 대화. ${SRC.aei}.`,
   mix: `과업 수 기준 구성입니다(분모: 이 직업의 과업). 비중 값을 더한 것이 아닙니다.`,
 };
 function mixBar(o, key, spec) {
@@ -503,19 +590,20 @@ function mixBar(o, key, spec) {
     <div class="legend">${spec.map((s, i) => `<span><i style="background:var(${s.c});opacity:${s.op || 1}"></i>${s.l} ${cnt[i]}</span>`).join('')}</div>`;
 }
 const EXPMIX = [{ l: 'E0', c: '--null', f: t => t.exp === 0 }, { l: 'E2', c: '--exp', op: .55, f: t => t.exp === 0.5 }, { l: 'E1', c: '--exp', f: t => t.exp === 1 }];
-const AEIMIX = [{ l: '관측', c: '--use', f: t => t.aei_match === 'exact' }, { l: '공유 과업', c: '--use', op: .55, f: t => t.aei_match === 'shared' },
-  { l: '관측되지 않음', c: '--null', f: t => t.aei_match === 'unobserved' }, { l: '연결되지 않음', c: '--border', f: t => t.aei_match === 'unlinked' }, { l: '다중 매칭', c: '--border', op: .5, f: t => t.aei_match === 'multi' }];
+const AEIMIX = [{ l: STATUS.exact[0], c: '--use', f: t => t.aei_match === 'exact' }, { l: STATUS.shared[0], c: '--use', op: .55, f: t => t.aei_match === 'shared' },
+  { l: STATUS.unobserved[0], c: '--null', f: t => t.aei_match === 'unobserved' }, { l: STATUS.unlinked[0], c: '--border', f: t => t.aei_match === 'unlinked' }, { l: STATUS.multi[0], c: '--border', op: .5, f: t => t.aei_match === 'multi' }];
 
 function openDetail(code) {
   current = BY[code];
+  addRecent(code);
   const o = current, el = $('#detail');
   el.classList.add('open');
-  const m = (c, label, t, val, sub) => `<div class="metric" style="--c:var(${c})"><div class="h">${label} ${tip(t)}</div><div class="v num">${val}</div><div class="p">${sub}</div></div>`;
+  const m = (c, label, t, val, expl, sub) => `<div class="metric" style="--c:var(${c})"><div class="h">${label} ${tip(t)}</div><div class="v num">${val}</div><div class="small" style="margin:2px 0 4px">${expl}</div><div class="src">${sub}</div></div>`;
   const hasKo = o.tasks.some(t => t.text_ko);
   el.innerHTML = `
     <div class="dhead">
       <div>
-        <div class="small muted">${esc(GROUP[o.group]?.name_ko || '')} · ${o.code}${o.job_zone ? ' · Job Zone ' + o.job_zone : ''} ${reviewBadge(o)}</div>
+        <div class="small muted">${esc(GROUP[o.group]?.name_ko || '')} · ${o.code}${o.job_zone ? ' · Job Zone ' + o.job_zone : ''}</div>
         <h2 style="margin:2px 0 0">${esc(title(o))}</h2>
         <div class="muted">${esc(o.title_en)}</div>
       </div>
@@ -532,22 +620,28 @@ function openDetail(code) {
           <span>고용 <b class="num">${fmt.emp(o.emp)}</b></span><span>중위 연봉 <b class="num">${fmt.wage(o.wage_median)}</b></span>
         </div>
         <div class="src" style="margin-bottom:6px">${SRC.oews}</div>
-        ${m('--exp', '이론적 노출', TIP.exp, o.exp == null ? '연결되지 않음' : o.exp.toFixed(2), o.exp == null ? '' : `전체 직업 중 상위 ${rankOf('exp', o.exp)}% · 분모: 이 직업 과업 · ${SRC.exp}`)}
-        ${m('--use', '관측 노출 (직업)', TIP.obs, o.obs_exp == null ? '지표 없음' : o.obs_exp.toFixed(3), o.obs_exp == null ? `${SRC.obs}에 이 직업 코드가 없습니다` : (o.obs_exp > 0 ? `전체 직업 중 상위 ${rankOf('obs_exp', o.obs_exp)}% · ` : '공식 지표값 0 · ') + SRC.obs)}
-        <div class="metric"><div class="h" style="--c:var(--exp)">과업 노출 구성 ${tip(TIP.mix)}</div>${mixBar(o, 'exp', EXPMIX)}<div class="src" style="margin-top:4px">과업 ${o.tasks.length}개 · ${SRC.exp}</div></div>
-        <div class="metric"><div class="h" style="--c:var(--use)">Claude 대화 관측 상태 ${tip(TIP.mix)}</div>${mixBar(o, 'aei', AEIMIX)}<div class="src" style="margin-top:4px">과업 ${o.tasks.length}개 · ${SRC.aei}</div></div>
+        ${m('--exp', 'AI 적용 가능성', TIP.exp, o.exp == null ? '자료 연결 안 됨' : o.exp.toFixed(2), TXT.exp, o.exp == null ? '' : `전체 직업 중 상위 ${rankOf('exp', o.exp)}% · 분모: 이 직업 과업 · ${SRC.exp}`)}
+        ${m('--use', 'Claude 관측 노출', TIP.obs, o.obs_exp == null ? '지표 없음' : o.obs_exp.toFixed(3), TXT.obs, o.obs_exp == null ? `${SRC.obs}에 이 직업 코드가 없습니다` : (o.obs_exp > 0 ? `전체 직업 중 상위 ${rankOf('obs_exp', o.obs_exp)}% · ` : '지표값 0 · ') + SRC.obs)}
+        <div class="metric"><div class="h" style="--c:var(--exp)">과업별 AI 적용 가능성 구성 ${tip(TIP.mix)}</div>${mixBar(o, 'exp', EXPMIX)}<div class="src" style="margin-top:4px">과업 ${o.tasks.length}개 · ${SRC.exp}</div></div>
+        <div class="metric"><div class="h" style="--c:var(--use)">과업 상태 ${tip(TIP.mix)}</div>${mixBar(o, 'aei', AEIMIX)}<div class="src" style="margin-top:4px">과업 ${o.tasks.length}개 · ${SRC.aei}</div></div>
       </aside>
       <div>
+        <div id="glance"></div>
         <div class="toolbar" style="margin-top:0">
           <div class="seg" id="tsort" role="group" aria-label="과업 정렬">
-            ${[['imp', '중요도순'], ['exp', '노출순'], ['share', '관측 비중순']].map(([k, l]) => `<button data-v="${k}" aria-pressed="${taskSort === k}">${l}</button>`).join('')}
+            ${[['imp', '중요도순'], ['exp', 'AI 적용 가능성순'], ['share', '대화 비중순']].map(([k, l]) => `<button data-v="${k}" aria-pressed="${taskSort === k}">${l}</button>`).join('')}
           </div>
-          ${hasKo ? `<div class="seg" id="tlang" role="group" aria-label="과업 언어"><button data-v="ko" aria-pressed="${lang === 'ko'}">한국어</button><button data-v="en" aria-pressed="${lang === 'en'}">English</button></div><span class="badge">기계 번역·검수</span>`
-                  : '<span class="small muted">자동 결합 직업은 과업을 영문 원문으로 표시합니다</span>'}
+          <span class="tcount num">${taskCountLabel(o)}</span>
+          ${hasKo ? `<div class="seg" id="tlang" role="group" aria-label="과업 언어"><button data-v="ko" aria-pressed="${lang === 'ko'}">한국어</button><button data-v="en" aria-pressed="${lang === 'en'}">English</button></div>`
+                  : `<span class="small muted">이 직업은 과업을 영문 원문으로 표시합니다</span>`}
         </div>
+        <p class="small" style="margin:0 0 12px"><b style="color:var(--use)">과업별 대화 비중</b>: ${TXT.share}</p>
+        <div id="tfilter"></div>
         <div id="tasks" class="anim"></div>
       </div>
     </div>`;
+  taskFilter = null;
+  renderGlance();
   renderTasks();
   $('#tsort').onclick = e => { const b = e.target.closest('button'); if (b) { taskSort = b.dataset.v; renderTasks(); $('#tsort').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); } };
   if (hasKo) $('#tlang').onclick = e => { const b = e.target.closest('button'); if (b) { lang = b.dataset.v; renderTasks(); $('#tlang').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); } };
@@ -557,19 +651,93 @@ function openDetail(code) {
   el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   drawChart();
 }
+/* ---------- 이 직업 한눈에: 과업 수로 세는 요약 (대화 비중 값은 더하지 않음) ---------- */
+let taskFilter = null;
+const MIN_AUTO = 3;   // 대화 방식 결론을 내기 위한 최소 과업 수
+const isSeen = t => t.aei_match === 'exact' || t.aei_match === 'shared';
+function cellOf(t) {   // 2×2 과업 지도의 칸
+  if (t.exp == null || !(isSeen(t) || t.aei_match === 'unobserved')) return 'other';
+  return (t.exp > 0 ? 'pos' : 'neg') + '_' + (isSeen(t) ? 'seen' : 'unseen');
+}
+const CELL = {
+  pos_seen: 'AI 적용 가능 · 대화에서 확인됨', pos_unseen: 'AI 적용 가능 · 공개 자료에서 확인 안 됨',
+  neg_seen: 'AI 적용 어려움 · 대화에서 확인됨', neg_unseen: 'AI 적용 어려움 · 공개 자료에서 확인 안 됨',
+  other: '자료 연결 안 됨 · 여러 항목과 일치 · 평가 없음',
+};
+function taskCountLabel(o) {
+  const core = o.tasks.filter(t => t.type === 'Core').length, sup = o.tasks.filter(t => t.type === 'Supplemental').length;
+  const etc = o.tasks.length - core - sup;
+  return `과업 ${o.tasks.length}개 (핵심 ${core} · 보조 ${sup}${etc ? ' · 유형 없음 ' + etc : ''})`;
+}
+const shortTask = t => { const s = t.text_ko || t.text_en; return s.length > 42 ? s.slice(0, 40) + '…' : s; };
+function renderGlance() {
+  const o = current, T = o.tasks, n = T.length;
+  const c = k => T.filter(t => cellOf(t) === k).length;
+  // ① AI 적용 가능성
+  const e1 = T.filter(t => t.exp === 1).length, e2 = T.filter(t => t.exp === 0.5).length, noExp = T.filter(t => t.exp == null).length;
+  const top5 = [...T].sort((a, b) => (b.imp ?? 0) - (a.imp ?? 0)).slice(0, Math.min(5, n));
+  const top5pos = top5.filter(t => t.exp > 0).length;
+  const s1 = `과업 ${n}개 중 <b>${e1 + e2}개(${fmt.pct(e1 + e2, n)})</b>가 AI로 작업 시간을 줄일 수 있다고 평가됐습니다 (AI만으로 ${e1}개, 도구가 필요한 것 ${e2}개${noExp ? `, 평가 없음 ${noExp}개` : ''}). 중요도 상위 ${top5.length}개 과업 중에서는 ${top5pos}개가 여기에 해당합니다.`;
+  // ② 과업별 대화 비중: 확인된 과업 수 + 직업 안 순위만
+  const seen = T.filter(isSeen), shared = T.filter(t => t.aei_match === 'shared').length;
+  const linked = seen.length + T.filter(t => t.aei_match === 'unobserved').length;
+  const excl = T.filter(t => t.aei_match === 'unlinked' || t.aei_match === 'multi').length;
+  const top3 = [...seen].sort((a, b) => b.obs_share - a.obs_share).slice(0, 3);
+  const s2 = linked
+    ? `Claude 자료와 연결된 과업 ${linked}개 중 <b>${seen.length}개</b>가 대화에서 확인됐습니다${shared ? ` (다른 직업에도 있는 과업 ${shared}개 포함)` : ''}${excl ? `. 자료 연결 안 됨·여러 항목과 일치 ${excl}개는 세지 않았습니다` : ''}.` +
+      (top3.length > 1 ? ` 이 직업 과업 중 대화 비중이 큰 순서: ${top3.map((t, i) => `${i + 1}) ${esc(shortTask(t))}`).join(' ')}`
+        : top3.length ? ` 확인된 과업: ${esc(shortTask(top3[0]))}` : '')
+    : `이 직업의 과업은 Claude 자료와 연결되지 않았습니다.`;
+  // ③ 대화 방식: 과업 수로 세고 최소 개수 규칙
+  const au = T.filter(t => t.auto != null), aiLead = au.filter(t => t.auto > 0.5).length, huLead = au.filter(t => t.auto < 0.5).length, tie = au.length - aiLead - huLead;
+  const s3 = au.length >= MIN_AUTO
+    ? `대화 방식이 분류된 과업 ${au.length}개 중 <b>${huLead}개</b>는 '사람과 함께 작업함'이, ${aiLead}개는 'AI에 맡김'이 더 많습니다${tie ? ` (반반 ${tie}개)` : ''}.`
+    : `대화 방식이 분류된 과업이 ${au.length}개뿐이라 판단하기에 과업 수가 적습니다.`;
+  const cell = k => `<button class="gcell ${k}${taskFilter === k ? ' on' : ''}" data-k="${k}" aria-pressed="${taskFilter === k}"${c(k) ? '' : ' disabled'}><span class="gn num">${c(k)}</span><span class="gp num">${fmt.pct(c(k), n)}</span></button>`;
+  const other = c('other');
+  $('#glance').innerHTML = `
+    <div class="card glance">
+      <h3>이 직업 한눈에</h3>
+      <ul class="gsum">
+        <li style="--c:var(--exp)">${s1} <span class="src">분모: 이 직업 과업 ${n}개 · ${SRC.exp}</span></li>
+        <li style="--c:var(--use)">${s2} <span class="src">개수와 순위만 보여 주며, 대화 비중을 더하지 않습니다 · ${SRC.aei}</span></li>
+        <li style="--c:var(--aug)">${s3} <span class="src">분모: 대화 방식이 분류된 과업 · ${SRC.aei}</span></li>
+      </ul>
+      <div class="gmap" role="group" aria-label="과업 지도: 칸을 누르면 아래 과업 목록이 걸러집니다">
+        <span></span><span class="gh">대화에서 확인됨</span><span class="gh">공개 자료에서 확인 안 됨</span>
+        <span class="gh gr">AI 적용 가능</span>${cell('pos_seen')}${cell('pos_unseen')}
+        <span class="gh gr">AI 적용 어려움</span>${cell('neg_seen')}${cell('neg_unseen')}
+      </div>
+      <div class="src" style="margin-top:8px">과업 지도: 칸을 누르면 아래 과업 목록이 그 칸의 과업으로 걸러집니다. 비율의 분모는 이 직업 과업 ${n}개입니다. "확인 안 됨"은 0건이라는 뜻이 아닙니다.
+        ${other ? `<button class="linkbtn${taskFilter === 'other' ? ' on' : ''}" data-k="other">지도에서 뺀 과업 ${other}개 보기</button>` : ''}</div>
+    </div>`;
+  $('#glance').onclick = e => {
+    const b = e.target.closest('[data-k]'); if (!b) return;
+    taskFilter = taskFilter === b.dataset.k ? null : b.dataset.k;
+    renderGlance(); renderTasks();
+    $('#tfilter').scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  };
+}
 function renderTasks() {
   const o = current;
-  const T = [...o.tasks].sort({ imp: (a, b) => (b.imp ?? 0) - (a.imp ?? 0),
+  const shown = taskFilter ? o.tasks.filter(t => cellOf(t) === taskFilter) : o.tasks;
+  $('#tfilter').innerHTML = taskFilter
+    ? `<div class="fbar"><span>걸러 보는 중: <b>${CELL[taskFilter]}</b> · 과업 ${shown.length}개</span><button class="btn" id="tfClear">필터 해제</button></div>` : '';
+  if (taskFilter) $('#tfClear').onclick = () => { taskFilter = null; renderGlance(); renderTasks(); };
+  const T = [...shown].sort({ imp: (a, b) => (b.imp ?? 0) - (a.imp ?? 0),
     exp: (a, b) => (b.exp ?? -1) - (a.exp ?? -1) || (b.imp ?? 0) - (a.imp ?? 0),
     share: (a, b) => (b.obs_share ?? -1) - (a.obs_share ?? -1) || (b.imp ?? 0) - (a.imp ?? 0) }[taskSort]);
-  const maxShare = Math.max(0, ...o.tasks.map(t => t.obs_share || 0));
   $('#tasks').innerHTML = T.map(t => {
     const ko = lang === 'ko' && t.text_ko;
-    const st = AEI[t.aei_match] || AEI.unlinked;
-    const shareLbl = t.obs_share != null ? `${share(t.obs_share)} <span class="src">대화 중 비중</span>${tip(TIP.share)}` : `${st[0]}${tip(st[2])}`;
+    const r = t.obs_share != null ? shareRank(t.obs_share) : null;
+    const shareLbl = r
+      ? `100만 건당 약 ${perMillion(t.obs_share)}건 꼴 · 상위 ${r.top}%${tip(`${TXT.share} 원래 값: 대화 중 ${share(t.obs_share)}. "100만 건당"은 비중을 바꿔 쓴 환산값이며 실제 대화 건수가 아닙니다. 막대는 관측된 과업 ${OBS_SORTED.length.toLocaleString()}개 중 순위입니다(길수록 상위). ${SRC.aei}.`)}`
+      : pill(STATUS[t.aei_match] ? t.aei_match : 'unlinked', 'o');
+    const g = EXPTXT[t.exp];
     const flags = [
-      t.aei_match === 'shared' ? `<span class="badge warn">공유 과업</span>` : '',
-      t.crosswalk ? `<span class="badge o" title="AEI 과업표의 옛 직업 코드(2010)를 공식 대응표로 바꿔 연결">코드 변경 대응${t.crosswalk === 'split' ? '(분할)' : ''}</span>` : '',
+      t.aei_match === 'exact' ? pill('exact') : '',
+      t.aei_match === 'shared' ? pill('shared', 'warn') : '',
+      t.crosswalk ? `<span class="badge o" title="Claude 자료 과업표의 옛 직업 코드(2010)를 공식 대응표로 바꿔 연결">코드 변경 대응${t.crosswalk === 'split' ? '(분할)' : ''}</span>` : '',
       t.text_bridge ? `<span class="badge o" title="문구가 조금 바뀐 과업을 같은 Task ID로 연결">문구 변경 대응</span>` : '',
     ].join('');
     return `<article class="card task">
@@ -579,13 +747,13 @@ function renderTasks() {
         <span class="imp num">중요도 ${t.imp == null ? '—' : t.imp.toFixed(1)}</span>
       </div>
       <div class="bars">
-        <span class="k">노출</span>${bar(t.exp, 1, '--exp')}<span class="lbl">${t.exp == null ? '연결되지 않음' : t.exp.toFixed(1) + ' (' + t.exp_label + ')'} <span class="src">GPT-4</span></span>
-        <span class="k">관측</span>${bar(t.obs_share, maxShare, '--use')}<span class="lbl">${shareLbl}</span>
-        <span class="k">자동화</span>${split(t.auto)}<span class="lbl">${t.auto == null ? (t.obs_share != null ? '분류 불가' : '—') : `${Math.round(t.auto * 100)}% 자동화 · ${Math.round((1 - t.auto) * 100)}% 보조${tip(TIP.auto)}`}</span>
+        <span class="k">AI 적용 가능성</span>${steps(t.exp)}<span class="lbl">${g ? `<b style="font-weight:600;color:var(--text)">${g[0]}</b> · ${g[1]}${tip(g[2])}` : '평가 없음'}</span>
+        <span class="k">대화 비중</span>${r ? bar(r.pct, 100, '--use') : bar(null)}<span class="lbl">${shareLbl}</span>
+        <span class="k">대화 방식</span>${split(t.auto)}<span class="lbl">${t.auto == null ? (t.obs_share != null ? pill('noauto', 'o') : '—') : `${Math.round(t.auto * 100)}% AI에 맡김 · ${Math.round((1 - t.auto) * 100)}% 사람과 함께${tip(TIP.auto)}`}</span>
       </div>
       ${flags ? `<div class="flags">${flags}</div>` : ''}
     </article>`;
-  }).join('') + `<p class="src">막대 길이: 노출은 0~1, 관측은 이 직업 과업 중 최대값 기준 상대 길이(라벨은 절대값). 출처: O*NET 31.0 과업·중요도, ${SRC.exp}, ${SRC.aei}.</p>`;
+  }).join('') + `<p class="src">AI 적용 가능성은 등급(해당 없음 · 도구가 있으면 가능 · AI만으로 가능)으로, 대화 비중 막대는 관측된 과업 ${OBS_SORTED.length.toLocaleString()}개 중 순위로 표시합니다(길수록 상위). 출처: O*NET 31.0 과업·중요도, ${SRC.exp}, ${SRC.aei}.</p>`;
   requestAnimationFrame(() => requestAnimationFrame(() => $('#tasks')?.classList.remove('anim')));
 }
 
@@ -597,19 +765,18 @@ function sources() {
   const rate = {
     onet: `기준 데이터 (직업 ${OCC.length.toLocaleString()} · 과업 ${tot.toLocaleString()})`,
     gpts: `과업 라벨 ${fmt.pct(gt - g.unmatched, gt)} 연결 · 직업 β ${m.match.exp_occ.matched}개`,
-    aei: `과업 5분류(아래 표) · 관측 노출 직업 ${m.match.obs_exp.matched}/${m.match.obs_exp.matched + m.match.obs_exp.unmatched}`,
+    aei: `과업 상태 5분류(아래 표) · Claude 관측 노출 직업 ${m.match.obs_exp.matched}/${m.match.obs_exp.matched + m.match.obs_exp.unmatched}`,
     oews: `직업 ${m.match.oews.matched}/${m.match.oews.matched + m.match.oews.unmatched}`,
   };
   $('#srcTable').innerHTML = '<thead><tr><th>데이터</th><th>버전</th><th>라이선스</th><th>연결</th><th>받은 날</th></tr></thead><tbody>' +
     m.sources.map(s => `<tr><td><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a></td><td>${esc(s.version)}</td><td>${esc(s.license)}</td><td class="num">${rate[s.id] || '—'}</td><td class="num">${esc(s.downloaded)}</td></tr>`).join('') + '</tbody>';
-  const rows = [['exact', '관측', '(직업 코드, 문구)가 AEI 과업표에 있고 대화 비중 값이 있음'], ['shared', '공유 과업', '문구는 있으나 다른 직업 코드에만 연결'],
-    ['unobserved', '관측되지 않음', 'AEI 과업표에 있으나 대화 비중 값이 없음 (공개 기준 미만)'], ['unlinked', '연결되지 않음', 'AEI 과업표에 없음 (31.0 신규 과업·문구 변경)'], ['multi', '다중 매칭', '한 값을 고를 수 없어 연결하지 않음']];
-  $('#matchTable').innerHTML = '<thead><tr><th>분류</th><th>의미</th><th>과업 수</th><th>비율</th></tr></thead><tbody>' +
-    rows.map(([k, l, d]) => `<tr><td>${l}</td><td>${d}</td><td class="num">${a[k].toLocaleString()}</td><td class="num">${(a[k] / tot * 100).toFixed(1)}%</td></tr>`).join('') +
+  const rows = ['exact', 'shared', 'unobserved', 'unlinked', 'multi'];
+  $('#matchTable').innerHTML = '<thead><tr><th>과업 상태</th><th>의미</th><th>과업 수</th><th>비율</th></tr></thead><tbody>' +
+    rows.map(k => `<tr><td>${STATUS[k][0]}</td><td>${STATUS[k][1]}</td><td class="num">${a[k].toLocaleString()}</td><td class="num">${(a[k] / tot * 100).toFixed(1)}%</td></tr>`).join('') +
     `</tbody><tfoot><tr><td colspan="4" class="small muted">분모: O*NET 31.0 과업 ${tot.toLocaleString()}개 · 코드 변경 대응 ${(a.crosswalk_changed + a.crosswalk_split).toLocaleString()}건(분할 ${a.crosswalk_split.toLocaleString()}) · 문구 변경 대응 ${a.text_bridge.toLocaleString()}건 · ${SRC.aei}</td></tr></tfoot>`;
   $('#notes').textContent = `빌드 ${m.built_at} · ${m.notes}`;
   const linked = tot - a.unlinked;
-  $('#lim-match').textContent = `AEI 과업표와 연결된 과업 중 ${fmt.pct(a.exact + a.shared, linked)}가 관측됨, 전체 과업의 ${(a.unlinked / tot * 100).toFixed(1)}%는 연결되지 않음`;
+  $('#lim-match').textContent = `연결 가능한 과업 중 ${fmt.pct(a.exact, linked)}가 대화에서 확인됨, 전체 과업의 ${(a.unlinked / tot * 100).toFixed(1)}%는 자료 연결 안 됨`;
 }
 
 /* ---------- 산점도 (S4, F6 · P1) ---------- */
@@ -624,7 +791,12 @@ function drawChart() {
   const zero = pts.filter(o => o.obs_exp === 0).length;
   const xs = pts.map(o => o.exp).sort((a, b) => a - b), ys = pts.filter(o => o.obs_exp > 0).map(o => o.obs_exp).sort((a, b) => a - b);
   medX = xs[xs.length >> 1]; medY = ys[ys.length >> 1];
-  $('#scatterNote').textContent = `아래 띠는 관측 노출 공식 지표값이 0인 직업 ${zero}개입니다(결측이 아님). 지표가 없는 ${nul}개 직업은 표시하지 않습니다. 기준선: 이론적 노출 중앙값 ${medX.toFixed(2)}, 관측 노출(0 초과) 중앙값 ${medY.toFixed(3)}.`;
+  $('#scatterNote').innerHTML = [
+    `<b>기준선</b>: 가로 기준선(${medX.toFixed(3)})은 전체 직업 ${pts.length}개의 AI 적용 가능성 중앙값이고, 세로 기준선(${medY.toFixed(3)})은 Claude 관측 노출이 0보다 큰 직업의 중앙값입니다. ${pts.length}개 중 ${zero}개는 관측 노출이 0(결측이 아닌 지표값)이라 모두 아래쪽 구역에 들어가며, 그래프 맨 아래 띠에 모아 표시했습니다. 기준선 근처의 직업은 구역 분류에 큰 의미를 두지 마세요.`,
+    `<b>지표의 구조</b>: Claude 관측 노출 지표는 AI 적용 가능성을 바탕으로 계산되므로, "가능성은 낮고 관측은 높은" 직업(왼쪽 위)은 원래 드뭅니다.`,
+    `<b>점 크기</b>: BLS 고용 통계(OEWS May 2025)의 전국 고용자 수입니다. 세부 직업은 상위 직업군의 고용 규모를 함께 씁니다(예: 간호사 세부 직업 5개가 모두 간호사 전체 고용을 표시). 점을 누르면 직업 상세로 이동합니다.`,
+    `Claude 관측 노출 지표가 없는 ${nul}개 직업은 표시하지 않았습니다.`,
+  ].map(s => `<li>${s}</li>`).join('');
   const maxEmp = Math.max(...pts.map(o => o.emp || 0));
   const exp = css('--exp'), mute = css('--null'), text = css('--text-muted'), grid = css('--border'), use = css('--use'), fg = css('--text');
   const jit = o => BAND[0] + 0.012 + ((parseInt(o.code.replace(/\D/g, '')) * 2654435761 >>> 0) % 1000) / 1000 * (BAND[1] - BAND[0] - 0.024);
@@ -644,9 +816,9 @@ function drawChart() {
     ctx.moveTo(x.getPixelForValue(medX), a.top); ctx.lineTo(x.getPixelForValue(medX), a.bottom);
     ctx.moveTo(a.left, y.getPixelForValue(medY)); ctx.lineTo(a.right, y.getPixelForValue(medY)); ctx.stroke();
     ctx.setLineDash([]); ctx.fillStyle = text; ctx.font = '12px Pretendard, system-ui, sans-serif'; ctx.globalAlpha = .85;
-    ctx.textAlign = 'right'; ctx.fillText('노출↑ 관측↑', a.right - 8, a.top + 16); ctx.fillText('노출↑ 관측↓ 잠재 영향권', a.right - 8, y.getPixelForValue(medY) + 18);
-    ctx.textAlign = 'left'; ctx.fillText('노출↓ 관측↑', a.left + 8, a.top + 16); ctx.fillText('노출↓ 관측↓', a.left + 8, y.getPixelForValue(medY) + 18);
-    ctx.fillText(`관측 노출 0 (공식 지표값) · ${zero}개 직업`, a.left + 8, b1 - 6);
+    ctx.textAlign = 'right'; ctx.fillText('두 지표 모두 높음', a.right - 8, a.top + 16); ctx.fillText('가능성↑ 관측↓', a.right - 8, y.getPixelForValue(medY) + 18);
+    ctx.textAlign = 'left'; ctx.fillText('가능성↓ 관측↑', a.left + 8, a.top + 16); ctx.fillText('두 지표 모두 낮음', a.left + 8, y.getPixelForValue(medY) + 18);
+    ctx.fillText(`Claude 관측 노출 0 (지표값) · ${zero}개 직업`, a.left + 8, b1 - 6);
     if (sel) { const px = x.getPixelForValue(current.exp), py = y.getPixelForValue(current.obs_exp > 0 ? current.obs_exp : (BAND[0] + BAND[1]) / 2);
       ctx.globalAlpha = 1; ctx.fillStyle = fg; ctx.font = '700 13px Pretendard, system-ui, sans-serif'; ctx.textAlign = px > a.right - 140 ? 'right' : 'left';
       ctx.fillText(title(current), px + (ctx.textAlign === 'left' ? 12 : -12), py - 10); }
@@ -658,11 +830,11 @@ function drawChart() {
     options: {
       maintainAspectRatio: false, animation: false,
       scales: {
-        x: { min: 0, max: 1, title: { display: true, text: '이론적 노출 β (GPT-4 평가)', color: text }, grid: { color: grid + '88' }, ticks: { color: text } },
-        y: { min: BAND[0], max: Math.ceil(Math.max(...pts.map(o => o.obs_exp)) * 1.1 * 20) / 20, title: { display: true, text: '관측 노출 (AEI 2026-03, 공식 지표)', color: text }, grid: { color: ctx => ctx.tick.value < 0 ? 'transparent' : grid + '88' },
-             ticks: { color: text, stepSize: 0.1, callback: v => v < 0 ? '' : (+v).toFixed(1) } },
+        x: { min: 0, max: 1, title: { display: true, text: 'AI 적용 가능성 (GPT-4 평가)', color: text }, grid: { color: grid + '88' }, ticks: { color: text } },
+        y: { min: BAND[0], max: Math.ceil(Math.max(...pts.map(o => o.obs_exp)) * 1.1 * 20) / 20, title: { display: true, text: 'Claude 관측 노출 (Anthropic 지표, 2026)', color: text }, grid: { color: ctx => ctx.tick.value < 0 ? 'transparent' : grid + '88' },
+             ticks: { color: text, stepSize: 0.1, callback: v => v < 0 || Math.abs(v * 10 - Math.round(v * 10)) > 1e-6 ? '' : (+v).toFixed(1) } },
       },
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => { const o = c.raw.o; return [title(o) + ' (' + o.title_en + ')', `이론적 노출 ${f2(o.exp)} · 관측 노출 ${o.obs_exp.toFixed(3)} · 고용 ${fmt.emp(o.emp)}`]; } } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => { const o = c.raw.o; return [title(o) + ' (' + o.title_en + ')', `AI 적용 가능성 ${f2(o.exp)} · Claude 관측 노출 ${o.obs_exp.toFixed(3)} · 고용 ${fmt.emp(o.emp)}`]; } } } },
       onClick: (e, els) => { if (els.length) go(els[0].element.$context.raw.o.code); },
       onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
     },
@@ -671,10 +843,10 @@ function drawChart() {
 function quads() {
   const pts = OCC.filter(o => o.exp != null && o.obs_exp != null && inFilter(o));
   const Q = [
-    ['노출↑ 관측↑', 'Claude 대화에서 이미 많이 관측되는 직업', o => o.exp >= medX && o.obs_exp >= medY, (a, b) => b.obs_exp - a.obs_exp],
-    ['노출↑ 관측↓', '잠재 영향권: 관측이 적은 이유(규제·책임·데이터·도구 접근)는?', o => o.exp >= medX && o.obs_exp < medY, (a, b) => (b.emp || 0) - (a.emp || 0)],
-    ['노출↓ 관측↑', '예상 밖 관측: 일부 과업에 집중', o => o.exp < medX && o.obs_exp >= medY, (a, b) => b.obs_exp - a.obs_exp],
-    ['노출↓ 관측↓', '물리적·대면 과업 중심', o => o.exp < medX && o.obs_exp < medY, (a, b) => (b.emp || 0) - (a.emp || 0)],
+    ['오른쪽 위 · 두 지표가 모두 높은 직업', 'AI로 할 수 있다고 평가된 일도 많고, Claude 자료에서도 관련 과업이 비교적 많이 확인됩니다.', o => o.exp >= medX && o.obs_exp >= medY, (a, b) => b.obs_exp - a.obs_exp],
+    ['오른쪽 아래 · 가능성은 높고 관측은 낮은 직업', 'AI 적용 가능성 평가에 비해 Claude에서 확인된 업무 범위는 작습니다.', o => o.exp >= medX && o.obs_exp < medY, (a, b) => (b.emp || 0) - (a.emp || 0)],
+    ['왼쪽 위 · 가능성은 낮고 관측은 높은 직업', '직업 전체의 가능성 평가는 낮지만, 일부 과업이 Claude에서 확인될 수 있습니다.', o => o.exp < medX && o.obs_exp >= medY, (a, b) => b.obs_exp - a.obs_exp],
+    ['왼쪽 아래 · 두 지표가 모두 낮은 직업', '이 자료에서는 AI 적용 가능성과 Claude 관측 범위가 모두 낮게 나타납니다.', o => o.exp < medX && o.obs_exp < medY, (a, b) => (b.emp || 0) - (a.emp || 0)],
   ];
   $('#quads').innerHTML = Q.map(([h, d, f, s]) => {
     const L = pts.filter(f).sort(s);
@@ -694,13 +866,13 @@ function renderCompare() {
     return `<div class="card">
       <button class="x" data-x="${c}" aria-label="비교에서 빼기">×</button>
       <h3><a href="#occ=${c}" style="color:inherit;text-decoration:none">${esc(title(o))}</a></h3>
-      <div class="small muted" style="margin-bottom:8px">${esc(o.title_en)}</div>${reviewBadge(o)}
-      <div class="mini" style="grid-template-columns:62px 1fr 48px">
-        <span class="muted">이론 노출</span>${bar(o.exp, 1, '--exp')}<span class="lbl">${f2(o.exp)}</span>
-        <span class="muted">관측 노출</span>${bar(o.obs_exp, maxObs, '--use')}<span class="lbl">${o.obs_exp == null ? '없음' : o.obs_exp.toFixed(3)}</span>
+      <div class="small muted" style="margin-bottom:8px">${esc(o.title_en)}</div>
+      <div class="mini" style="grid-template-columns:104px 1fr 48px">
+        <span class="muted">AI 적용 가능성</span>${bar(o.exp, 1, '--exp')}<span class="lbl">${f2(o.exp)}</span>
+        <span class="muted">Claude 관측 노출</span>${bar(o.obs_exp, maxObs, '--use')}<span class="lbl">${o.obs_exp == null ? '없음' : o.obs_exp.toFixed(3)}</span>
       </div>
-      <div class="small" style="margin-top:14px">과업 노출 구성</div>${mixBar(o, 'exp', EXPMIX)}
-      <div class="small" style="margin-top:10px">Claude 대화 관측 상태</div>${mixBar(o, 'aei', AEIMIX)}
+      <div class="small" style="margin-top:14px">과업별 AI 적용 가능성 구성</div>${mixBar(o, 'exp', EXPMIX)}
+      <div class="small" style="margin-top:10px">과업 상태</div>${mixBar(o, 'aei', AEIMIX)}
       <div class="src" style="margin-top:10px">과업 ${o.tasks.length}개 기준 · 고용 ${fmt.emp(o.emp)} · 중위 연봉 ${fmt.wage(o.wage_median)} (${SRC.oews})</div>
     </div>`;
   }).join('') + (compare.length < 3 ? '<div class="empty">직업 상세에서 "비교에 추가"를 누르세요</div>' : '');
